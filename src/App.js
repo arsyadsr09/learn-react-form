@@ -1,12 +1,16 @@
-import React, { Component, Fragment } from "react";
-import "./App.css";
+import React, { Component } from "react";
+import "./App.scss";
+
+import Header from "./Header";
+import Todo from "./Todo";
 
 class App extends Component {
   render() {
     return (
-      <Fragment>
-        <h1>Learn React Form</h1>
-      </Fragment>
+      <div className="body">
+        <Header />
+        <Todo />
+      </div>
     );
   }
 }
