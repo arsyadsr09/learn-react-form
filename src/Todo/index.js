@@ -3,18 +3,31 @@ import React, { Component } from "react";
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: { title: "" }, result: [] };
+    this.state = { title: "", desc: "", result: [] };
   }
 
-  handleChange = event => {
-    this.setState({ value: event.target.value });
+  handleTitleChange = event => {
+    this.setState({
+      title: event.target.value
+    });
+  };
+
+  handleDescChange = event => {
+    this.setState({
+      desc: event.target.value
+    });
   };
 
   handleSubmit = event => {
     event.preventDefault();
+    const value = {
+      title: this.state.title,
+      desc: this.state.desc
+    };
     this.setState(prevState => ({
-      result: [...prevState.result, this.state.value],
-      value: {}
+      result: [...prevState.result, value],
+      title: "",
+      desc: ""
     }));
   };
 
@@ -37,8 +50,8 @@ class Register extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  value={this.state.value.title}
-                  onChange={this.handleChange}
+                  value={this.state.title}
+                  onChange={this.handleTitleChange}
                   placeholder="Title"
                 />
               </div>
@@ -48,9 +61,9 @@ class Register extends Component {
               <div className="col-10">
                 <textarea
                   className="form-control"
-                  value={this.state.value.desc}
-                  onChange={this.handleChange}
-                  placeholder="Desc"
+                  value={this.state.desc}
+                  onChange={this.handleDescChange}
+                  placeholder="Description"
                 />
               </div>
             </div>
@@ -60,8 +73,13 @@ class Register extends Component {
               value="Add"
             />
           </form>
-          <ul className="scroll">
-            <li />
+          <ul className="scroll list-group list-group-flush">
+            {this.state.result.map((item, i) => (
+              <li className="list-group-item row" key={i}>
+                <span className="title col-3">{item.title}</span>
+                <span className="desc col-9">{item.desc}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

@@ -10,6 +10,7 @@ class Header extends Component {
             <h5 className="sub-title">One Day Project</h5>
           </div>
           <div>
+            {/* eslint-disable-next-line jsx-a11y/heading-has-content */}
             <h1 className="fa fa-arrow-down" />
           </div>
         </div>
