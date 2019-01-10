@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Register extends Component {
+class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = { title: "", desc: "", result: [] };
@@ -20,18 +20,35 @@ class Register extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const value = {
-      title: this.state.title,
-      desc: this.state.desc
-    };
-    this.setState(prevState => ({
-      result: [...prevState.result, value],
-      title: "",
-      desc: ""
-    }));
+    if (this.state.title.length < 1) {
+      alert("Title Kosong!");
+    } else if (this.state.desc.length < 1) {
+      alert("Desc Kosong!");
+    } else {
+      const resultLength = this.state.result.length;
+      const value = {
+        id: resultLength,
+        title: this.state.title,
+        desc: this.state.desc
+      };
+      this.setState(prevState => ({
+        result: [...prevState.result, value],
+        title: "",
+        desc: ""
+      }));
+    }
+  };
+
+  handleBtnDelete = (e, id) => {
+    var result = [...this.state.result];
+    if (id !== -1) {
+      result.splice(id, 1);
+      this.setState({ result: result });
+    }
   };
 
   render() {
+    const enabled = this.state.title.length > 0 && this.state.desc.length > 0;
     return (
       <div className="todo">
         {/* <div className="tabs">
@@ -70,21 +87,41 @@ class Register extends Component {
             <input
               type="submit"
               className="btn btn-primary pull-right"
+              disabled={!enabled}
               value="Add"
             />
           </form>
-          <ul className="scroll list-group list-group-flush">
-            {this.state.result.map((item, i) => (
-              <li className="list-group-item row" key={i}>
-                <span className="title col-3">{item.title}</span>
-                <span className="desc col-9">{item.desc}</span>
-              </li>
-            ))}
-          </ul>
+          <table className="scroll table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Desc</th>
+                <th scope="col" />
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.result.map((item, i) => (
+                <tr key={i}>
+                  <th scope="row">{i + 1}</th>
+                  <td>{item.title}</td>
+                  <td>{item.desc}</td>
+                  <td>
+                    <div
+                      className="danger"
+                      onClick={e => this.handleBtnDelete(e, item.id)}
+                    >
+                      <i className="fa fa-times" />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     );
   }
 }
 
-export default Register;
+export default Todo;

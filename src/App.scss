@@ -102,9 +102,13 @@ header {
     height: 70vh;
     .scroll {
       margin-top: 80px;
-      height: 25vh;
+      max-height: 25vh;
       width: 40vw;
       overflow-y: scroll;
+      .danger {
+        color: rgb(173, 0, 0);
+        cursor: pointer;
+      }
     }
   }
 }
